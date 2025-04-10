@@ -2,9 +2,8 @@ package src.main.java.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
+import java.awt.event.WindowAdapter;
 import javax.swing.*;
 
 import src.main.java.log.Logger;
@@ -33,7 +32,7 @@ public class MainApplicationFrame extends JFrame {
 
         setJMenuBar(createMenuBar());
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 confirmAndExit();
@@ -95,7 +94,7 @@ public class MainApplicationFrame extends JFrame {
     }
 
     private void confirmAndExit() {
-        Object[] options = {"Да", "Нет"};
+        String[] exitOptions = {YesOrNoState.YES.getTitle(),YesOrNoState.No.getTitle()};
         int result = JOptionPane.showOptionDialog(
                 this,
                 "Вы действительно хотите закрыть приложение?",
@@ -103,8 +102,8 @@ public class MainApplicationFrame extends JFrame {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                options,
-                options[0]);
+                exitOptions,
+                exitOptions[0]);
 
         if (result == JOptionPane.YES_OPTION) {
             System.exit(0);
