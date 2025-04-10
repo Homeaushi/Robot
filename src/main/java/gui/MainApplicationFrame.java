@@ -17,8 +17,8 @@ public class MainApplicationFrame extends JFrame {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(inset, inset,
-                screenSize.width  - inset*2,
-                screenSize.height - inset*2);
+                screenSize.width - inset * 2,
+                screenSize.height - inset * 2);
 
         setContentPane(desktopPane);
 
@@ -27,7 +27,7 @@ public class MainApplicationFrame extends JFrame {
         addWindow(logWindow);
 
         GameWindow gameWindow = new GameWindow();
-        gameWindow.setSize(400,  400);
+        gameWindow.setSize(400, 400);
         addWindow(gameWindow);
 
         setJMenuBar(createMenuBar());
@@ -42,7 +42,7 @@ public class MainApplicationFrame extends JFrame {
 
     protected LogWindow createLogWindow() {
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
-        logWindow.setLocation(10,10);
+        logWindow.setLocation(10, 10);
         logWindow.setSize(300, 800);
         setMinimumSize(logWindow.getSize());
         logWindow.pack();
@@ -54,6 +54,7 @@ public class MainApplicationFrame extends JFrame {
         desktopPane.add(frame);
         frame.setVisible(true);
     }
+
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -75,7 +76,7 @@ public class MainApplicationFrame extends JFrame {
         logItem.addActionListener(e -> Logger.debug("Новая строка"));
         menu.add(logItem);
 
-        JMenuItem openingItem = new JMenuItem("Открыть меню логов",KeyEvent.VK_S);
+        JMenuItem openingItem = new JMenuItem("Открыть меню логов", KeyEvent.VK_S);
         openingItem.addActionListener(e -> addWindow(createLogWindow()));
         menu.add(openingItem);
 
@@ -94,7 +95,7 @@ public class MainApplicationFrame extends JFrame {
     }
 
     private void confirmAndExit() {
-        String[] exitOptions = {YesOrNoState.YES.getTitle(),YesOrNoState.No.getTitle()};
+        String[] exitOptions = {YesOrNoState.YES.getTitle(), YesOrNoState.No.getTitle()};
         int result = JOptionPane.showOptionDialog(
                 this,
                 "Вы действительно хотите закрыть приложение?",

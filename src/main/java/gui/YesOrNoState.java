@@ -1,8 +1,8 @@
 package src.main.java.gui;
 
 public enum YesOrNoState {
-    YES ("Да"),
-    No ("Нет");
+    YES("Да"),
+    No("Нет");
 
     private String title;
 
