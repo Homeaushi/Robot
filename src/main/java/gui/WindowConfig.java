@@ -2,20 +2,34 @@ package src.main.java.gui;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class WindowConfig {
     private final String CONFIG_FILE = System.getProperty("user.home") + "/windowsState.cfg";
     private final Properties windowStates = new Properties();
+    private static final Properties BASE_CONFIG = new Properties();
+    static {
+        BASE_CONFIG.setProperty("gamewindow.x", "0");
+        BASE_CONFIG.setProperty("gamewindow.y", "0");
+        BASE_CONFIG.setProperty("gamewindow.width", "400");
+        BASE_CONFIG.setProperty("gamewindow.height", "400");
+        BASE_CONFIG.setProperty("gamewindow.iscollaps", "false");
+        BASE_CONFIG.setProperty("logwindow.x", "10");
+        BASE_CONFIG.setProperty("logwindow.y", "10");
+        BASE_CONFIG.setProperty("logwindow.width", "212");
+        BASE_CONFIG.setProperty("logwindow.height", "525");
+        BASE_CONFIG.setProperty("logwindow.iscollaps", "false");
+    }
+
+    
 
     public WindowConfig() {
         windowStates.putAll(loadConfig());
     }
 
-    public void saveConfig(Properties props){
+    public void saveConfig(){
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
-            props.store(output, "Конфигурация окон приложения");
+            windowStates.store(output, "Конфигурация окон приложения");
         } catch (IOException error) {
             System.out.println("Не удалось сохранить файл с конфигурацией окон");
         }
@@ -43,7 +57,7 @@ public class WindowConfig {
                 saveWindowState(frame, "gameWindow");
             }
         }
-        saveConfig(windowStates);
+        saveConfig();
     }
 
     public Properties getWindowsStates() {
@@ -59,22 +73,8 @@ public class WindowConfig {
     }
 
     private void saveBaseConfig() {
-        final String baseFileConfig = """
-                #\\u041A\\u043E\\u043D\\u0444\\u0438\\u0433\\u0443\\u0440\\u0430\\u0446\\u0438\\u044F \\u043E\\u043A\\u043E\\u043D \\u043F\\u0440\\u0438\\u043B\\u043E\\u0436\\u0435\\u043D\\u0438\\u044F
-                #Wed Apr 16 04:21:58 GMT+05:00 2025
-                gameWindow.height=400
-                gameWindow.isCollaps=false
-                gameWindow.width=400
-                gameWindow.x=0
-                gameWindow.y=0
-                logWindow.height=525
-                logWindow.isCollaps=false
-                logWindow.width=212
-                logWindow.x=10
-                logWindow.y=10
-                """;
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
-            output.write(baseFileConfig.getBytes(StandardCharsets.UTF_8));
+            BASE_CONFIG.store(output, "Базовая конфигурация окон приложения");
         } catch (IOException error) {
             System.out.println("Не удалось создать файл с базовой конфигурацией окон");
         }

@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
-import java.io.IOException;
 import java.util.Properties;
 import javax.swing.*;
 
@@ -38,12 +37,8 @@ public class MainApplicationFrame extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
+            public void windowClosing(java.awt.event.WindowEvent windowEvent){
                     confirmAndExit();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
             }
         });
     }
@@ -122,18 +117,12 @@ public class MainApplicationFrame extends JFrame {
         menu.setMnemonic(KeyEvent.VK_Q);
 
         JMenuItem exitItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_C);
-        exitItem.addActionListener(_ -> {
-            try {
-                confirmAndExit();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        exitItem.addActionListener(_ -> confirmAndExit());
         menu.add(exitItem);
         return menu;
     }
 
-    private void confirmAndExit() throws IOException {
+    private void confirmAndExit(){
         String[] exitOptions = {YesOrNoState.YES.getTitle(), YesOrNoState.No.getTitle()};
         int result = JOptionPane.showOptionDialog(
                 this,
