@@ -9,16 +9,16 @@ public class WindowConfig {
     private final Properties windowStates = new Properties();
     private static final Properties BASE_CONFIG = new Properties();
     static {
-        BASE_CONFIG.setProperty("gamewindow.x", "0");
-        BASE_CONFIG.setProperty("gamewindow.y", "0");
-        BASE_CONFIG.setProperty("gamewindow.width", "400");
-        BASE_CONFIG.setProperty("gamewindow.height", "400");
-        BASE_CONFIG.setProperty("gamewindow.iscollaps", "false");
-        BASE_CONFIG.setProperty("logwindow.x", "10");
-        BASE_CONFIG.setProperty("logwindow.y", "10");
-        BASE_CONFIG.setProperty("logwindow.width", "212");
-        BASE_CONFIG.setProperty("logwindow.height", "525");
-        BASE_CONFIG.setProperty("logwindow.iscollaps", "false");
+        BASE_CONFIG.setProperty("gameWindow.x", "0");
+        BASE_CONFIG.setProperty("gameWindow.y", "0");
+        BASE_CONFIG.setProperty("gameWindow.width", "400");
+        BASE_CONFIG.setProperty("gameWindow.height", "400");
+        BASE_CONFIG.setProperty("gameWindow.isCollaps", "false");
+        BASE_CONFIG.setProperty("logWindow.x", "10");
+        BASE_CONFIG.setProperty("logWindow.y", "10");
+        BASE_CONFIG.setProperty("logWindow.width", "212");
+        BASE_CONFIG.setProperty("logWindow.height", "525");
+        BASE_CONFIG.setProperty("logWindow.isCollaps", "false");
     }
 
     
