@@ -1,13 +1,13 @@
 package src.main.java.gui;
 
+import src.main.java.log.Logger;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.util.Properties;
 import javax.swing.*;
-
-import src.main.java.log.Logger;
 
 
 public class MainApplicationFrame extends JFrame {
@@ -23,7 +23,7 @@ public class MainApplicationFrame extends JFrame {
                 screenSize.height - inset * 2);
         setContentPane(desktopPane);
 
-        LogWindow logWindow = createLogWindow();
+        LogWindow logWindow = new LogWindow();
         restoreWindowState(logWindow, "logWindow");
         addWindow(logWindow);
 
@@ -37,20 +37,10 @@ public class MainApplicationFrame extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent){
-                    confirmAndExit();
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                confirmAndExit();
             }
         });
-    }
-
-    protected LogWindow createLogWindow() {
-        LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
-        logWindow.setLocation(10, 10);
-        logWindow.setSize(300, 800);
-        setMinimumSize(logWindow.getSize());
-        logWindow.pack();
-        Logger.debug("Протокол работает");
-        return logWindow;
     }
 
     protected void addWindow(JInternalFrame frame) {
@@ -90,9 +80,24 @@ public class MainApplicationFrame extends JFrame {
 
         menuBar.add(createLookAndFeelMenu());
         menuBar.add(createTestMenu());
+        menuBar.add(createGameMenu());
         menuBar.add(createExitMenu());
 
+
         return menuBar;
+    }
+
+    private JMenu createGameMenu() {
+        JMenu menu = new JMenu("Игра");
+        menu.setMnemonic(KeyEvent.VK_M);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "Взаимодействия с меню игры");
+
+        JMenuItem gameItem = new JMenuItem("Открыть игровое окно");
+        gameItem.addActionListener(_ -> addWindow(new GameWindow()));
+        menu.add(gameItem);
+
+        return menu;
     }
 
     private JMenu createTestMenu() {
@@ -105,8 +110,8 @@ public class MainApplicationFrame extends JFrame {
         logItem.addActionListener(_ -> Logger.debug("Новая строка"));
         menu.add(logItem);
 
-        JMenuItem openingItem = new JMenuItem("Открыть меню логов", KeyEvent.VK_S);
-        openingItem.addActionListener(_ -> addWindow(createLogWindow()));
+        JMenuItem openingItem = new JMenuItem("Открыть меню логов", KeyEvent.VK_C);
+        openingItem.addActionListener(_ -> addWindow(new LogWindow()));
         menu.add(openingItem);
 
         return menu;
@@ -116,13 +121,13 @@ public class MainApplicationFrame extends JFrame {
         JMenu menu = new JMenu("Выход");
         menu.setMnemonic(KeyEvent.VK_Q);
 
-        JMenuItem exitItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_C);
+        JMenuItem exitItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_ESCAPE);
         exitItem.addActionListener(_ -> confirmAndExit());
         menu.add(exitItem);
         return menu;
     }
 
-    private void confirmAndExit(){
+    private void confirmAndExit() {
         String[] exitOptions = {YesOrNoState.YES.getTitle(), YesOrNoState.No.getTitle()};
         int result = JOptionPane.showOptionDialog(
                 this,
