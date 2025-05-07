@@ -5,26 +5,22 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.TextArea;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
+import src.main.java.log.Logger;
 import src.main.java.log.LogChangeListener;
 import src.main.java.log.LogEntry;
 import src.main.java.log.LogWindowSource;
 
 public class LogWindow extends JInternalFrame implements LogChangeListener
 {
-    private LogWindowSource m_logSource;
-    private TextArea m_logContent;
+    private final LogWindowSource m_logSource = Logger.getDefaultLogSource();
+    private final TextArea m_logContent;
 
-    public LogWindow(LogWindowSource logSource)
+    public LogWindow()
     {
-        super("Протокол работы", true, true, true, true);
-        m_logSource = logSource;
+        super("Меню логов", true, true, true, true);
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
         m_logContent.setSize(200, 500);
@@ -33,6 +29,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
+        Logger.debug("Протокол работает");
         updateLogContent();
     }
 
